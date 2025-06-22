@@ -1,0 +1,673 @@
+---
+import folder from '../assets/folder.svg';
+import folder_yellow from '../assets/folder_yellow.svg';
+import open_folder from '../assets/open_folder.svg';
+import open_folder_yellow from '../assets/open_folder_yellow.svg';
+import right_arrow from '../assets/right_arrow.svg';
+import right_arrow_long from '../assets/right_arrow_long.svg';
+import arrow from '../assets/arrow.svg';
+import arrow_with_line from '../assets/arrow_with_line.svg';
+
+---
+
+
+
+
+<div id="container">
+	<div class = "content">
+		<div class="navbar">
+			<div class="nav_item">Github</div>
+			<div class="nav_item">Linkedin</div>
+			<div class="nav_item end">About</div>
+		</div>
+		<div class="title" >Gor_Khechyan</div>
+		<div class="position" >Software_Engineer</div>
+		
+		<div class="inner"> 
+			<div class="intro">
+				Welcome to my portfolio :)
+			</div>
+			<div class="instructions">
+				you can click on the directories or use the terminal
+			</div>
+
+
+			<div class="directory top"> 
+				gors_desktop <div class="folder_icon" />
+			</div>
+		
+			<div class="row">
+				<div class="line"> 
+				</div>
+				<div class="col">
+					
+						<div class = "directory_container lvl1"> 
+							<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+							<div class="directory"> 
+								personal_projects <div class="folder_icon" />
+							</div>
+						</div>
+						
+						<div class="row inside lvl2">
+							<div class="line "> 
+							</div>
+							<div class="col">
+								
+								<div class = "directory_container"> 
+									<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+									<div class="directory"> 
+										plant_dad<div class="folder_icon" />
+									</div>
+								</div>
+								<div class = "project_overview" >tech_stack : Nextjs, NestJs, React, Tailwindcss, Typescript, Postgres, Redis, OpenAI, Google Cloud Storage, PlantNet API</div>
+								<div class = "project_overview" >project_overview : </div>
+
+								<div class = "directory_container"> 
+									<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+									<div class="directory"> 
+										uic_api<div class="folder_icon" />
+									</div>
+								</div>
+								<div class = "directory_container"> 
+									<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+									<div class="directory"> 
+										interview_diver<div class="folder_icon" />
+									</div>
+								</div>
+								<div class = "directory_container"> 
+									<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+									<div class="directory"> 
+										word_game<div class="folder_icon" />
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					<div class = "directory_container lvl1"> 
+						<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+						<div class="directory"> 
+							resume<div class="circle" />
+						</div>
+						
+					</div>
+					
+					
+				</div>
+			</div>
+
+			<div id="mydiv">
+				<div id="mydivheader">
+					<button class = "minimize_button"></button>
+						<div class = "terminal_title"> gors -- zsh </div>
+						<div class = "space"></div>
+				</div>
+				<div class = "terminal_container">
+					<div class = "terminal_inner"> 
+
+					<div class = "console_container">						
+						<div class="terminal_line">
+							<div class="input" contenteditable="false" spellcheck="false" data-prompt="gor@Gors-MacBook-Pro-3 ~ % "></div>
+						</div>
+					</div>
+
+				</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+<script>
+
+	dragElement(document.getElementById("mydiv"));
+
+	function dragElement(elmnt: any) {
+		var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+		if (document.getElementById(elmnt.id + "header")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header")!.onmousedown = dragMouseDown;
+		} else {
+			// otherwise, move the DIV from anywhere inside the DIV:
+			elmnt.onmousedown = dragMouseDown;
+		}
+
+		function dragMouseDown(e: any) {
+			e = e || window.event;
+			e.preventDefault();
+			// get the mouse cursor position at startup:
+			pos3 = e.clientX;
+			pos4 = e.clientY;
+			document.onmouseup = closeDragElement;
+			// call a function whenever the cursor moves:
+			document.onmousemove = elementDrag;
+		}
+
+
+		function getOffset( el: any ) {
+    var _x = 0;
+    var _y = 0;
+    while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+        _x += el.offsetLeft - el.scrollLeft;
+        _y += el.offsetTop - el.scrollTop;
+        el = el.offsetParent;
+    }
+    return { top: _y, left: _x };
+}
+
+		function elementDrag(e: any) {
+			const content =  document.querySelector(".content");
+			const terminal_container = document.querySelector<HTMLElement>(".terminal_container");
+			const header = document.getElementById(elmnt.id + "header");
+			e = e || window.event;
+			e.preventDefault();
+			// calculate the new cursor position:
+			pos1 = pos3 - e.clientX;
+			pos2 = pos4 - e.clientY;
+			pos3 = e.clientX;
+			pos4 = e.clientY;
+
+
+			// set the element's new position:
+			const nextLeft = elmnt.offsetLeft - pos1;
+			const nextTop = elmnt.offsetTop - pos2;
+			// Only allow rightward movement if you're at the wall
+			//while we are above 86 allow movment 
+			if (nextLeft >= 65 && nextLeft <= content!.clientWidth - 130 ) {
+				elmnt.style.left = nextLeft + "px";
+			}
+
+			if(header!.offsetWidth < 160){
+				if(nextTop >= -250 && nextTop <= content!.clientHeight - 450){
+					elmnt.style.top = nextTop + "px";
+				}
+			}else{
+				if(nextTop >= -50 && nextTop <= content!.clientHeight - 450){
+					elmnt.style.top = nextTop + "px";
+				}
+			}
+				// if(content!.clientHeight - nextTop >= 2000 && nextTop <= content!.clientHeight - 450){
+				// 	elmnt.style.top = nextTop + "px";
+				// }	
+		}
+
+		function closeDragElement() {
+			/* stop moving when mouse button is released:*/
+			document.onmouseup = null;
+			document.onmousemove = null;
+		}
+	}
+
+
+	function openLvl1(){
+		const inside = document.querySelectorAll('.lvl1');
+				const lvl2 = document.querySelector('.lvl2');
+				console.log(lvl2)
+				inside.forEach((ele) => {
+					if(getComputedStyle(ele).display == "flex"){
+						lvl2?.setAttribute("style", "display: none !important;"),
+						ele.setAttribute("style", "display: none !important;") 
+						folder_icon?.forEach((folder) => {
+							folder.style.setProperty(
+								'background-image',
+								'url("src/assets/folder.svg")',
+								'important'
+							)
+						})
+					}else{
+						ele.setAttribute("style", "display: flex !important;")	
+					}});
+	}
+  const directory = document.querySelector('.directory.top');
+	directory?.addEventListener('click', () => {
+    // const inside = document.querySelector('.inside');
+			openLvl1();
+	});
+
+	function openLvl2(){
+		const inside = document.querySelector('.lvl2');
+
+		if(inside){
+			getComputedStyle(inside).display == "flex" ? 
+			inside.setAttribute("style", "display: none !important;") : 
+			inside.setAttribute("style", "display: flex !important;");			
+		}
+	}
+
+
+	const lvl1 = document.querySelector('.lvl1');
+	lvl1?.addEventListener('click', () => {
+    // const inside = document.querySelector('.inside');
+
+		openLvl2();
+  });
+
+
+		const folder_icon = document.querySelectorAll<HTMLElement>('.folder_icon');
+		folder_icon.forEach((ele) => {
+			ele?.addEventListener('click', () => {
+				console.log(getComputedStyle(ele).backgroundImage)
+				!getComputedStyle(ele).backgroundImage.includes("open_folder_yellow.svg") ? 
+				ele.style.setProperty(
+					'background-image',
+					'url("src/assets/open_folder_yellow.svg")',
+					'important'
+				) 
+				: 
+				ele.style.setProperty(
+					'background-image',
+					'url("src/assets/folder.svg")',
+					'important'
+				)
+		})
+		const terminal_input = document.querySelector<HTMLElement>('.input');
+
+
+		const terminal = document.querySelector<HTMLElement>('.terminal_container');
+		const terminal_inner = terminal?.querySelector<HTMLElement>('.terminal_inner')
+		const terminal_title = document.querySelector<HTMLElement>(".terminal_title");
+		const minimized_header = document.getElementById('mydivheader');
+		minimized_header?.addEventListener('dblclick', () => {
+			if(minimized_header && terminal && terminal_inner && minimize_button && terminal_title)
+			{
+				console.log("hellof")
+				terminal.style.display = "flex";
+				terminal_inner.style.display = "block";
+				terminal.style.width = "800px";
+				terminal.style.height = "500px";
+				minimized_header.style.width = "100%";
+				minimized_header.style.height = "50px";
+				minimized_header.style.backgroundColor = "white";
+				minimized_header.style.borderBottomRightRadius = "0px";
+				minimized_header.style.borderBottomLeftRadius = "0px";
+				minimized_header.style.border = "none";
+				minimize_button.style.display = "block";
+				terminal_title.style.display = "block";
+				terminal.style.transition = "all 0.3s ease-in-out";
+				
+			}
+		});
+
+
+		const minimize_button = document.querySelector<HTMLElement>('.minimize_button');
+		const header = document.getElementById('mydivheader');
+			console.log(minimize_button)
+		minimize_button?.addEventListener('click', (e) => {
+			e.stopPropagation(); // to stop it from clicking outer terminal container
+
+			if(terminal && terminal_inner && terminal_input && header && terminal_title){
+				// minimize_button.style.display = "none";
+				terminal_inner.style.display = "none";
+				terminal.style.display = "none";
+				header.style.width = "150px";
+				header.style.height = "150px";
+				header.style.backgroundColor = "#323232";
+				header.style.height = "150px";
+				header.style.border = "2.5px solid white";
+				header.style.borderRadius = "15px";
+				minimize_button.style.display = "none";
+				terminal_title.style.display = "none";
+			}
+		});
+
+
+		terminal_input?.addEventListener("focus", (e) => {
+			if(terminal_input && terminal_input.textContent == ""){
+				terminal_input.textContent = " ";
+			}
+		});
+
+		window.addEventListener('DOMContentLoaded', () => {
+		const inputEl = document.querySelector('.input');//i donrt even know if this si hlping
+		if (inputEl && terminal_input) {//to ensure prev content doesnt get erased
+			terminal_input.textContent = " ";//this seem to have fix the inital issue wher i could delete all the spaces
+			inputEl.setAttribute('contenteditable', 'true');
+		}
+	});
+
+
+		terminal_input?.addEventListener(
+			"keydown",
+			(event) => {
+				if (event.defaultPrevented) {
+					return; // Do nothing if the event was already processed
+				}
+
+				if (event.metaKey) {
+					event.preventDefault();
+					return;
+				}
+
+				switch (event.key) {
+					case "Meta":
+						event.preventDefault();
+						return
+					case "Enter":
+						const historyContainer = document.querySelector('.console_container');
+
+						if (historyContainer && terminal_input) {
+							const newLine = document.createElement("div");
+							//! prev issue 
+							//!If you're using Astro, Next.js, or a framework that scopes CSS using data-* attributes (like your data-astro-cid-...), 
+							//!then dynamically added elements do not automatically get those scoped attributes.
+
+							const prompt = terminal_input.getAttribute("data-prompt") || "";
+							const commandText = terminal_input.textContent || " ";
+							
+							console.log("*", commandText, "*");
+							if(commandText.trim() == "ls gors_desktop"){
+								openLvl1();
+							}
+
+							if(commandText.trim() == "ls personal_projects"){
+								openLvl2();
+							}
+
+
+							newLine.style.color = "white";
+							newLine.style.whiteSpace = "pre-wrap";
+							newLine.style.wordBreak = "break-all";
+							newLine.style.margin = "0px 10px 0px 10px";
+							newLine.style.display = "inline-block";
+							// Set content
+
+							newLine.innerHTML = `<div>gor@Gors-MacBook-Pro-3 ~ % ${commandText}</div>`;
+
+							historyContainer.insertBefore(newLine, terminal_input.parentElement);
+
+							// Reset input
+							terminal_input.textContent = " ";
+
+							// Scroll to bottom if needed
+							historyContainer.scrollTop = historyContainer.scrollHeight;
+						}
+						event.preventDefault();
+						
+						break;
+					case "Delete":
+						if(terminal_input.textContent == ""){
+							event.preventDefault();
+						}
+						break;
+					default:
+						// terminal_input.textContent = " " + terminal_input.textContent; 
+						if(terminal_input.textContent == ""){
+							terminal_input.textContent += " ";
+						}
+        		return; // Quit when this doesn't handle the key event.
+				}
+				// Cancel the default action to avoid it being handled twice
+			},
+			true,
+		);
+	});
+</script>
+
+<style>
+	#mydiv {
+  position: absolute;
+  z-index: 9;
+	background-color: transparent;
+	top: 76%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+}
+
+#mydivheader {
+	position: relative;
+  cursor: move;
+  z-index: 10;
+	width: 150px;
+	height: 150px;
+	border: 2.5px solid white;
+	border-radius: 15px;
+	background-color: #323232;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+	html, body {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+	.content {
+		position: relative;
+		display: flex;
+		width: 100%;
+		height: 100%;
+		flex-direction: column;
+	}
+	.navbar{
+		font-family: "Bayon";
+		display: flex;
+		width: 100%;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		gap: 20px;
+		justify-content: end;
+		align-items: center;
+		/* background-color: black; */
+	}
+	.end {
+		margin-right: 35px;
+	}
+	.nav_item {
+		color: white;
+		font-size: x-large;
+	}
+	.title {
+		font-family: "Bayon";
+		align-self: center;
+		line-height: 125px;
+		font-size: 10.5em;
+		color: white;
+	}
+	.position {
+		font-family: "Bayon";
+		align-self: center;
+		font-size: 2.5em;
+		margin-top: 20px;
+		color: white;
+	}
+	.content .inner{
+		width: 100%;
+		height: 100%;
+		margin-top: 50px;
+		margin-left: 35px;
+		position: relative;
+		/* background-color: grey; */
+	}
+	.intro{
+		align-self: center;
+		font-size: 3.5em;
+		color: white;
+	}
+	.inner .instructions{
+		font-size: 2em;
+		color: white;
+	}
+	.row{
+		display: flex;
+		flex-direction: row;
+		/* background-color: brown; */
+	}
+	.col{
+		display: flex;
+		flex-direction: column;
+	}
+	.row{
+		display: flex;
+		flex-direction: row;
+		/* background-color: brown; */
+	}
+	.directory_container{
+		margin-top: 20px;
+		display: flex;
+		flex-direction: row;
+	}
+	.directory{
+		display: flex;
+		font-size: 2em;
+		color: white;
+		align-items: center;
+		width: fit-content;
+		/* background-color: blue; */
+		border-bottom: 2.5px solid white;
+	}
+	.line{
+		width: 2.5px;
+		background-color: white;
+		margin-left: 5px;
+		margin-bottom: 24.5px;
+	}
+	.line2{
+		height: 50px;
+		width: 2.5px;
+		background-color: white;
+		margin-left: 5px;
+		background-color: aqua;
+	}
+	.project_overview{
+		margin-left: 42px;
+	}
+	.inside{
+		align-self: flex-start;
+		margin-left: 50px;
+	}
+	.lvl1{
+		display: none;
+	}
+	.lvl2{
+		display: none;
+	}
+	.top{
+		margin-top: 50px;
+	}
+	.terminal_container{
+		display: none;
+		width: 150px;
+		height: 100px;
+		background-color: #323232;
+		z-index: 10;
+		border-bottom-left-radius: 20px;
+		border-bottom-right-radius: 20px;
+		border-bottom: 2.5px solid white;
+		border-left: 2.5px solid white;
+		border-right: 2.5px solid white;
+		transition: all 0.3s ease-in-out;
+		cursor: move;
+	}
+	.header{
+		z-index: 15;
+		width: 100%;
+		height: 50px;
+		background-color: white;
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+	}
+	.minimize_button{
+		display: none;
+		margin-left: 10px;
+		width: 20px;
+		height: 20px;
+		background-color: #FFDD00;
+		border-radius: 50px;
+	}
+	.space{
+		width: 40px;
+		height: 40px;
+		margin-right: 5px;
+	}
+	.terminal_title{
+		display: none;
+	}
+	.terminal_inner{
+		display: none;
+		height: 100%;
+	}
+	.console_container{
+		display: flex;
+		align-items: start;
+		flex-direction: column;
+		overflow:scroll;
+		height: 450px;
+	}
+	/* #console{
+		all: unset; 
+		caret-color: white;  
+	} */
+	.terminal_line{
+		width: 100%;
+	}
+	.input {
+		/* position: relative; */
+		outline: none;
+		white-space: pre-wrap;
+		word-break: break-all;
+		caret-color: white;
+		color: white;
+		display: inline-block;
+		margin: 0px 10px 0px 10px;
+		
+	}
+	.history{
+		outline: none;
+		white-space: pre-wrap;
+		word-break: break-all;
+		caret-color: white;
+		color: white;
+		min-height: 1em;
+		margin: 10px;
+	}
+	.input::before {
+		content: attr(data-prompt);
+		white-space: pre;
+		color: white;
+	}
+
+
+
+
+
+	.folder_icon {
+		margin-left: 10px;
+		width: 3rem;
+		height: 3rem;
+		background-image: url("../assets/folder.svg");
+		background-size: cover;
+		transition: background-image 0.3s ease-in-out;
+	}
+	.folder_icon:hover {
+		background-image: url("../assets/folder_yellow.svg");
+	}
+	.circle {
+		margin-left: 10px;
+		width: 2rem;
+		height: 2rem;
+		background-image: url("../assets/circle.svg");
+		background-size: cover;
+		transition: background-image 0.3s ease-in-out;
+	}
+	.circle:hover {
+		background-image: url("../assets/circle.svg");
+	}
+
+	#container {
+		font-family: "Oswald";
+		background-image: url("../assets/background.png");
+		/* background-position: center; */
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-attachment: fixed; /* ✅ Keeps background stationary */
+		height: 100vh;
+	}
+
+
+	
+	
+</style>
