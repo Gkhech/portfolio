@@ -26,7 +26,7 @@
 				Welcome to my portfolio :)
 			</div>
 			<div class="instructions">
-				you can click on the directories or use the terminal
+				Click on the directories below or use the terminal
 			</div>
 
 
@@ -146,22 +146,18 @@
 
 		
 
-			<div class="matches"> 
-			</div>
+			
 
 			<div id="mydiv">
 				
 				<div id="mydivheader">
-					<button class = "minimize_button">
-					</button>
-						<div class = "terminal_title"> gors -- zsh </div>
-						<div class = "space"></div>
+					<div class = "terminal_title"> gors -- zsh </div>
 				</div>
 				<div class = "terminal_container">
 					
 					<div class = "terminal_inner"> 
 
-					<div class = "console_container">						
+					<div class = "console_container">					
 						<div class="terminal_line">
 							<div class="input" contenteditable="false" spellcheck="false" data-prompt="gor@Gors-MacBook-Pro-3 ~ % "></div>
 						</div>
@@ -169,6 +165,7 @@
 
 					</div>
 				</div>
+				
 			</div>
 
 			<div class="minimized_terminal">
@@ -178,6 +175,8 @@
 		</div>
 
 	</div>
+	<div class="matches"> 
+			</div>
 </div>
 
 
@@ -213,7 +212,6 @@
 	const tree: Map<string, ParentAndChild> = new Map();
 	tree.set("gor", {parent: "/", children: gor_map})
 
-	//				if(operation == "cd" && tree.has(curr_dir) && tree.get(curr_dir)?.children.has(command)){
 	const parent_map = new Map();
 	parent_map.set("gor", "");
 	parent_map.set("gors_desktop", "gor");
@@ -276,6 +274,10 @@
 	
 
 	function calcLine2(){
+		let lineExtension = 46.5;
+		if(contentInnerWidth <= 450){
+			lineExtension -= 20.5;
+		}
 		const lvl2 = document.querySelector<HTMLElement>(".lvl2");
 		if(lvl2){
 		const plantDad = lvl2.querySelector("#top");
@@ -288,13 +290,16 @@
 				const yPosition2 = rect2.top + window.scrollY;
 				const line2 = document.querySelector<HTMLElement>(".line2");
 				if(line2){
-					line2.style.height = `${(yPosition2 - yPosition) + 46.5}px`;
+					line2.style.height = `${(yPosition2 - yPosition) + lineExtension}px`;
 				}
 			}
 		}
 	}
 
 	function calcLine1(lineExtension: number){
+		if(contentInnerWidth <= 450 && lineExtension != 0){
+			lineExtension -= 14.5;
+		}
 		console.log("lineExtension", lineExtension);
 		const top = document.getElementById("lvl1_top");
 		const bottom = document.getElementById("lvl1_bottom")
@@ -369,8 +374,8 @@
 	
 	
 
-	dragElement(document.getElementById("mydiv"));
-	const content =  document.querySelector<HTMLElement>(".content");
+	dragElement(document.getElementById("mydiv")!);
+
 	let contentInnerWidth: number;
 
 	function updateContentInnerWidth(){
@@ -391,18 +396,23 @@
 			console.log("size", size)
 				matches.onkeydown = function(event: any) {	
 					console.log("index", i)			
+					
+
 					if(event.key == "ArrowDown") {
 						if(i >= size) return
 						i += 1;
 						console.log('down');
-						document.getElementById(`${i}`)?.focus();	
 					}
 					
 					if(event.key == "ArrowUp") {
 						if(i <= 1) return
 						i  -= 1;
 						console.log('up');
-						document.getElementById(`${i}`)?.focus();
+					}
+
+					const curr_button = document.getElementById(`${i}`);
+					if(curr_button){
+						curr_button?.focus();	
 					}
 
 					if(event.key == "Escape" || event.key == "Esc") {
@@ -422,7 +432,6 @@
 						const commandText = input_div?.innerHTML;
 						const commandTextSplit = commandText?.split(" ");
 						commandTextSplit![commandTextSplit!.length - 1] = document.getElementById(`${i}`)?.innerHTML || " ";
-						console.log(commandTextSplit)
 						input_div!.innerHTML = commandTextSplit!.join(" ");
 						/*
 							✅ inputEl.focus();
@@ -502,6 +511,8 @@
 					if (matches) {
 						matches.style.left = `${caret.x + window.scrollX}px`;
 						matches.style.top = `${caret.y + 20 + window.scrollY}px`; // 20px offset to appear below caret
+						// matches.style.left = `${caret.x - 600}px`;
+						// matches.style.top = `${caret.y - 500}px`; // 20px offset to appear below caret
 					}
 
 				}
@@ -513,74 +524,77 @@
 	
 	window.addEventListener("resize", updateContentInnerWidth);
 
+	function dragElement(elmnt: HTMLElement) {
+		let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
+		const header = document.getElementById(elmnt.id + "header");
+		const dragTarget = header || elmnt;
 
-	function dragElement(elmnt: any) {
-		var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-		if (document.getElementById(elmnt.id + "header")) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id + "header")!.onmousedown = dragMouseDown;
-		} else {
-			// otherwise, move the DIV from anywhere inside the DIV:
-			elmnt.onmousedown = dragMouseDown;
-		}
+		// Bind both mouse and touch events
+		dragTarget.onmousedown = dragMouseDown;
+		dragTarget.ontouchstart = dragTouchStart;
 
-		function dragMouseDown(e: any) {
-			e = e || window.event;
+		function dragMouseDown(e: MouseEvent) {
 			e.preventDefault();
-			// get the mouse cursor position at startup:
 			pos3 = e.clientX;
 			pos4 = e.clientY;
+
 			document.onmouseup = closeDragElement;
-			// call a function whenever the cursor moves:
-			document.onmousemove = elementDrag;
+			document.onmousemove = elementDragMouse;
 		}
 
-		function getOffset( el: any ) {
-    var _x = 0;
-    var _y = 0;
-    while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-        _x += el.offsetLeft - el.scrollLeft;
-        _y += el.offsetTop - el.scrollTop;
-        el = el.offsetParent;
-    }
-    return { top: _y, left: _x };
-}
-
-		function elementDrag(e: any) {
-			e = e || window.event;
+		function dragTouchStart(e: TouchEvent) {
+			if (e.touches.length > 1) return; // ignore multi-touch
 			e.preventDefault();
-			// calculate the new cursor position:
-			pos1 = pos3 - e.clientX;
-			pos2 = pos4 - e.clientY;
-			pos3 = e.clientX;
-			pos4 = e.clientY;
+			pos3 = e.touches[0].clientX;
+			pos4 = e.touches[0].clientY;
 
+			document.ontouchend = closeDragElement;
+			document.ontouchmove = elementDragTouch;
+		}
 
-			const terminal_container = document.querySelector<HTMLElement>(".terminal_container");
-			let height = 50;
-			if(terminal_container && window.getComputedStyle(terminal_container).height == "500"){
-				height = -50;
-			}
-			// set the element's new position:
-			
+		function elementDragMouse(e: MouseEvent) {
+			handleDrag(e.clientX, e.clientY);
+		}
+
+		function elementDragTouch(e: TouchEvent) {
+			if (e.touches.length > 1) return;
+			handleDrag(e.touches[0].clientX, e.touches[0].clientY);
+		}
+
+		function handleDrag(clientX: number, clientY: number) {
+			// const matches = document.querySelector<HTMLElement>(".matches");
+			// matches!.style.display = "none";
+
+			pos1 = pos3 - clientX;
+			pos2 = pos4 - clientY;
+			pos3 = clientX;
+			pos4 = clientY;
+
+			const content = document.querySelector<HTMLElement>(".content"); // Adjust if needed
+			const contentWidth = content?.clientWidth || window.innerWidth;
+			const contentHeight = content?.scrollHeight || window.innerHeight;
+
 			const nextLeft = elmnt.offsetLeft - pos1;
 			const nextTop = elmnt.offsetTop - pos2;
-			if(nextLeft <= (contentInnerWidth - (75 * 2)) &&  nextLeft >= 0 + 75 ){
-				elmnt.style.left = nextLeft + "px";
-			}
-			if(nextTop <= (content!.scrollHeight) && nextTop >= 0 - 50){
-				elmnt.style.top = nextTop + "px";
-			}	
-			
-		}
 
-		function closeDragElement() {
-			/* stop moving when mouse button is released:*/
-			document.onmouseup = null;
-			document.onmousemove = null;
-		}
+			// Apply constraints
+			if (nextLeft >= 0 && nextLeft <= contentWidth - 75) {
+				elmnt.style.left = `${nextLeft}px`;
+			}
+			if (nextTop >= 0 && nextTop <= contentHeight - 50) {
+				elmnt.style.top = `${nextTop}px`;
+			}
 	}
+
+	function closeDragElement() {
+		document.onmouseup = null;
+		document.onmousemove = null;
+		document.ontouchend = null;
+		document.ontouchmove = null;
+	}
+}
+
 
 
 		function closeLvl1v2(gors_desktop_folder: HTMLElement, lvl1: NodeListOf<HTMLElement>, folder_icon: NodeListOf<HTMLElement>){
@@ -732,7 +746,7 @@
 		const minimized_header = document.getElementById('mydivheader');
 		const minimized_terminal = document.querySelector<HTMLElement>('.minimized_terminal');
 		minimized_terminal?.addEventListener('click', () => {
-			if(terminal_container && minimized_header && terminal_inner && minimize_button && terminal_title && mydiv){
+			if(terminal_container && minimized_header && terminal_inner && terminal_title && mydiv){
 				if(minimized){
 						console.log("hellof")
 						terminal_container.style.display = "flex";
@@ -745,7 +759,6 @@
 						minimized_header.style.height = "50px";
 						minimized_header.style.backgroundColor = "white";
 						minimized_header.style.display = "flex";
-						minimize_button.style.display = "block";
 						terminal_title.style.display = "block";
 						terminal_container.style.transition = "all 0.3s ease-in-out";
 						minimized = false;
@@ -754,10 +767,8 @@
 					terminal_inner.style.display = "none";
 					terminal_container.style.display = "none";
 					minimized_header.style.display = "none";
-
 					minimized_header.style.width = "150px";
 					minimized_header.style.height = "150px";
-					minimize_button.style.display = "none";
 					terminal_title.style.display = "none";
 					minimized = true;
 				}
@@ -766,25 +777,8 @@
 		});
 
 
-		const minimize_button = document.querySelector<HTMLElement>('.minimize_button');
 		const header = document.getElementById('mydivheader');
-			console.log(minimize_button)
-		minimize_button?.addEventListener('click', (e) => {
-			e.stopPropagation(); // to stop it from clicking outer terminal container
-
-			if(terminal_container && terminal_inner && terminal_input && header && terminal_title){
-				// minimize_button.style.display = "none";
-				terminal_inner.style.display = "none";
-				terminal_container.style.display = "none";
-				header.style.display = "none";
-
-				header.style.width = "150px";
-				header.style.height = "150px";
-				minimize_button.style.display = "none";
-				terminal_title.style.display = "none";
-				minimized = true;
-			}
-		});
+	
 
 
 		terminal_input?.addEventListener("focus", (e) => {
@@ -947,6 +941,13 @@
 								const children: HTMLElement[] = filtered.map((ele , index) => {
 									const autocomplete_option_div = document.createElement("button");
 									autocomplete_option_div.id = `${index + 1}`
+									autocomplete_option_div.style.width = "100%"
+									autocomplete_option_div.style.textAlign = "left"
+									autocomplete_option_div.style.overflow = "hidden"
+									autocomplete_option_div.style.backgroundColor = "transparent"
+									autocomplete_option_div.style.color = "white"
+									autocomplete_option_div.style.fontFamily = "Oswald"
+									
 									autocomplete_option_div.innerHTML = ele;
 									return autocomplete_option_div;
 								});
@@ -955,15 +956,10 @@
 								if (matches) {
 									matches.replaceChildren();
 									children.forEach(child => matches.appendChild(child));
+									matches.style.display = "flex";
 								}
 
-
-
-								if(matches)
-									matches.style.display = "flex";
-
 								const button = matches?.querySelector("button");
-								console.log("button", button)
 
 								if(button){
 									setTimeout(() => {
@@ -1005,7 +1001,6 @@
 								newLine.style.wordBreak = "break-all";
 								newLine.style.margin = "0px 10px 0px 10px";
 								newLine.style.display = "inline-block";
-								newLine.style.width = "100%";
 
 								// Set content
 								
@@ -1022,7 +1017,6 @@
 									newDiv.style.wordBreak = "break-all";
 									newDiv.style.margin = "0px 10px 0px 10px";
 									newDiv.style.display = "inline-block";
-									newDiv.style.width = "100%";
 									historyContainer.insertBefore(newDiv, terminal_input.parentElement);
 								}
 
@@ -1041,7 +1035,6 @@
 								newLine.style.wordBreak = "break-all";
 								newLine.style.margin = "0px 10px 0px 10px";
 								newLine.style.display = "inline-block";
-								newLine.style.width = "100%";
 
 								// Set content
 								
@@ -1123,8 +1116,27 @@
 							}
 							else if(commandTrimAll[0] == "cd" && commandTrimAll.length == 1){
 								console.log("only cd")
+								
+								const newLine = document.createElement("div");
+
+								newLine.style.color = "white";
+								newLine.style.whiteSpace = "pre-wrap";
+								newLine.style.wordBreak = "break-all";
+								newLine.style.margin = "0px 10px 0px 10px";
+								newLine.style.display = "inline-block";
+								// Set content
+								
+								newLine.innerHTML = `<div>gor@Gors-MacBook-Pro-3 ${curr_dir == "gor" ? "~" : curr_dir} %${commandText}</div>`;
+
+								historyContainer.insertBefore(newLine, terminal_input.parentElement);
+
 								curr_dir = "gor";
-								addToHistory(commandText, commandTrimAll, historyContainer, terminal_input)
+
+								// Reset input
+								terminal_input.textContent = " ";
+								terminal_input.dataset.prompt = `gor@Gors-MacBook-Pro-3 ~ %`;
+								// Scroll to bottom if needed
+								historyContainer.scrollTop = historyContainer.scrollHeight;
 							}else{
 
 								
@@ -1196,7 +1208,7 @@
 		border: none;
 		background-color: white;
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
 		display: none;
 		border-top-left-radius: 15px;
@@ -1361,19 +1373,6 @@
 		align-items: center;
 
 	}
-	.minimize_button{
-		display: none;
-		margin-left: 10px;
-		width: 20px;
-		height: 20px;
-		background-color: #FFDD00;
-		border-radius: 50px;
-	}
-	.space{
-		width: 40px;
-		height: 40px;
-		margin-right: 5px;
-	}
 	.terminal_title{
 		display: none;
 	}
@@ -1386,7 +1385,7 @@
 		display: flex;
 		align-items: start;
 		flex-direction: column;
-		overflow:scroll;
+		overflow: scroll;
 		height: 90%;
 		width: 100%;
 	}
@@ -1394,13 +1393,13 @@
 		width: 100%;
 	}
 	.matches{
+		font-family: "Oswald";
 		position: fixed;
 		width: 100px;
-		height: 150px;
+		height: fit-content;
 		display: none;
 		flex-direction: column;
-		/* right: 0;
-		top: 35px; */
+		width: 150px;
 		margin-top: 10px;
 		background-color: black;
 		z-index: 50;
@@ -1484,9 +1483,10 @@
 		margin-top: 15px;
 		margin-left: 10px;
 		align-self: flex-start;
-
 	}
-
+	button:focus {
+		outline: 2px solid white !important; /* your color */
+	}
 
 	@media (max-width: 800px) {
 		.title {			
@@ -1502,6 +1502,83 @@
 			height: 300px !important;;
 		}
   }
-	
-	
+
+	@media (max-width: 450px) {
+		.title {			
+			font-size: 4em;
+			line-height: 50px;
+		}
+		.position{
+			margin-top: 10px;
+			font-size: 2em;
+		}
+		.terminal_container{
+			width: 350px !important;;
+			height: 300px !important;;
+		}
+
+		.navbar{
+			justify-content: center;
+		}
+
+		.end{
+			margin-right: 0px;
+		}
+
+		.inner .instructions{
+			font-size: 1.15em;
+			color: white;
+		}
+
+		/* .project_overview_container{
+			display: none;
+			margin-left: 55px;
+		} */
+		
+		.project_overview{
+			margin-top: 10px;
+			font-size: 1.0em;
+		}
+
+		.directory_container{
+			margin-top: 10px;
+		}
+		.directory{
+			font-size: 1.15em;
+		}
+
+		.inside{
+			align-self: flex-start;
+			margin-left: 50px;
+		}
+		.content .inner{
+			margin-left: 35px;
+		}
+		
+		.folder_icon {
+			margin-left: 5px;
+			width: 1.5rem;
+			height: 1.5rem;
+		}
+
+		.circle {
+			margin-left: 5px;
+			width: 1rem;
+			height: 1rem;
+		}
+
+		.content .inner{
+			margin-left: 10px;
+		}
+
+		.minimized_terminal{
+			width: 75px;
+			height: 75px;	
+		}
+
+		#container {		
+			background-position: 10% center; /* 👈 shifts image to the left */
+		}
+			
+	}
 </style>
