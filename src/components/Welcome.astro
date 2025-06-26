@@ -1,12 +1,4 @@
 ---
-import folder from '../assets/folder.svg';
-import folder_yellow from '../assets/folder_yellow.svg';
-import open_folder from '../assets/open_folder.svg';
-import open_folder_yellow from '../assets/open_folder_yellow.svg';
-import right_arrow from '../assets/right_arrow.svg';
-import right_arrow_long from '../assets/right_arrow_long.svg';
-import arrow from '../assets/arrow.svg';
-import arrow_with_line from '../assets/arrow_with_line.svg';
 
 ---
 
@@ -48,7 +40,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 				<div class="col">
 					
 						<div class = "directory_container lvl1" id="lvl1_top" data-folder="closed"> 
-							<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+							<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 							<div class="directory"> 
 								personal_projects <div id = "personal_projects" class="folder_icon" data-folder="closed" />
 							</div>
@@ -61,7 +53,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 
 								<!-- <div class="col directory_hold"> -->
 									<div class = "directory_container" id="top"> 
-											<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+											<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 											<div class="directory"> 
 												plant_dad.txt<div class="folder_icon" data-folder="closed" />
 											</div>
@@ -76,7 +68,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 
 
 									<div class = "directory_container"> 
-										<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+										<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 										<div class="directory"> 
 											uic_api.txt<div class="folder_icon" data-folder="closed" />
 										</div>
@@ -88,7 +80,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 									</div>
 
 								<div class = "project_overview_container"  class = "directory_container"> 
-									<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+									<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 									<div class="directory"> 
 										interview_diver.txt<div class="folder_icon" data-folder="closed" />
 									</div>
@@ -100,7 +92,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 								</div>
 
 								<div class = "directory_container"> 
-									<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+									<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 									<div class="directory"> 
 										word_game.txt<div class="folder_icon" data-folder="closed" />
 									</div>
@@ -112,7 +104,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 								</div>
 
 								<div class = "directory_container"> 
-									<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+									<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 									<div class="directory"> 
 										assembly_language_interpreter.txt<div class="folder_icon" data-folder="closed"/>
 									</div>
@@ -124,7 +116,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 								</div>
 
 								<div class = "directory_container" id="bottom"> 
-									<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+									<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 									<div class="directory"> 
 										open_street_maps.txt<div class="folder_icon" data-folder="closed" />
 									</div>
@@ -141,7 +133,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 						</div>
 						
 					<div class = "directory_container lvl1" id="lvl1_bottom" data-folder="closed"> 
-						<img class="right_arrow" src={right_arrow.src} alt="right arrow" />
+						<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 						<a class = "directory" target = "_blank" href="https://drive.google.com/file/d/1ABNumKgpDbWP7AUFDB4uL7UODojpNrFE/view?usp=sharing"> 
 							resume <div class="circle" />
 						</a>
@@ -183,7 +175,12 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 	</div>
 </div>
 
+
+
+
 <script>
+
+
 	let curr_dir = "gor";
 	let matches: any = document.querySelector<HTMLElement>('.matches');
 
@@ -315,18 +312,21 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 			if(folder.dataset.folder == "closed"){
 				folder.style.setProperty(
 					'background-image',
-					'url("src/assets/open_folder_yellow.svg")',
+					`url(/assets/open_folder_yellow.svg)`,
 					'important'
-				) 
+				)
+		
 				folder.dataset.folder = "open";
 			}else{
 				folder.style.setProperty(
 					'background-image',
-					'url("src/assets/folder.svg")',
+					'url("/assets/folder.svg")',
 					'important'
 				)
+				
 				folder.dataset.folder = "closed";
 			}
+			console.log('New classes:', folder.classList.toString());
 		}
 	}
 
@@ -575,7 +575,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 			folder_icon?.forEach((folder) => {
 				folder.style.setProperty(
 					'background-image',
-					'url("src/assets/folder.svg")',
+					'url("/assets/folder.svg")',
 					'important'
 				)
 				folder.dataset.folder = "closed";
@@ -588,7 +588,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 			gors_desktop_folder.dataset.folder = "closed";
 			gors_desktop_folder.style.setProperty(
 				'background-image',
-				'url("src/assets/folder.svg")',
+				'url("/assets/folder.svg")',
 				'important'
 			)
 			calcLine1(0);
@@ -618,7 +618,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 			gors_desktop_folder.dataset.folder = "open";
 			gors_desktop_folder.style.setProperty(
 				'background-image',
-				'url("src/assets/open_folder_yellow.svg")',
+				'url("/assets/open_folder_yellow.svg")',
 				'important'
 			);
 			calcLine1(46.5);
@@ -666,7 +666,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 			if(folder){
 				folder.style.setProperty(
 					'background-image',
-					'url("src/assets/folder.svg")',
+					'url("/assets/folder.svg")',
 					'important'
 				)
 				folder.dataset.folder = "closed";
@@ -777,6 +777,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 		}
 	});
 
+	/*
 	function toggleSelectedFolder(folder: HTMLElement | null){
 		if(folder){
 			if(folder.dataset.folder === "closed"){
@@ -798,6 +799,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 			}
 		}
 	}
+		*/
 
 		function traverse(): Map<string, ParentAndChild>{
 			let hold: Map<string, ParentAndChild> = tree;
@@ -1180,6 +1182,7 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 		);
 </script>
 
+
 <style>
 	#mydiv {
 		position: absolute;
@@ -1451,28 +1454,28 @@ import arrow_with_line from '../assets/arrow_with_line.svg';
 		margin-left: 10px;
 		width: 3rem;
 		height: 3rem;
-		background-image: url("../assets/folder.svg");
+		background-image: url("/assets/folder.svg");
 		background-size: cover;
 		transition: background-image 0.3s ease-in-out;
 	}
 	.folder_icon:hover {
-		background-image: url("../assets/folder_yellow.svg");
+		background-image: url("/assets/folder_yellow.svg");
 	}
 	.circle {
 		margin-left: 10px;
 		width: 2rem;
 		height: 2rem;
-		background-image: url("../assets/circle.svg");
+		background-image: url("/assets/circle.svg");
 		background-size: cover;
 		transition: background-image 0.3s ease-in-out;
 	}
 	.circle:hover {
-		background-image: url("../assets/circle.svg");
+		background-image: url("/assets/circle.svg");
 	}
 
 	#container {
 		font-family: "Oswald";
-		background-image: url("../assets/background.png");
+		background-image: url("/assets/background.png");
 		/* background-position: center; */
 		background-repeat: no-repeat;
 		background-size: cover;
