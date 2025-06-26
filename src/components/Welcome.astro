@@ -150,12 +150,15 @@
 			</div>
 
 			<div id="mydiv">
+				
 				<div id="mydivheader">
-					<button class = "minimize_button"></button>
+					<button class = "minimize_button">
+					</button>
 						<div class = "terminal_title"> gors -- zsh </div>
 						<div class = "space"></div>
 				</div>
 				<div class = "terminal_container">
+					
 					<div class = "terminal_inner"> 
 
 					<div class = "console_container">						
@@ -168,7 +171,9 @@
 				</div>
 			</div>
 
-			<div class="minimized_terminal"/> 
+			<div class="minimized_terminal">
+				<div class="terminal_logo" />
+			</div> 
 
 		</div>
 
@@ -283,7 +288,7 @@
 				const yPosition2 = rect2.top + window.scrollY;
 				const line2 = document.querySelector<HTMLElement>(".line2");
 				if(line2){
-					line2.style.height = `${(yPosition2 - yPosition) + 47}px`;
+					line2.style.height = `${(yPosition2 - yPosition) + 46.5}px`;
 				}
 			}
 		}
@@ -343,7 +348,7 @@
 				}
 			}
 			calcLine2();
-			calcLine1(46.5);
+			calcLine1(40.5);
 		});
 	})
 
@@ -374,7 +379,7 @@
 		!getComputedStyle(document.querySelector<HTMLElement>(".folder_icon")!).backgroundImage.includes("open_folder_yellow.svg") ? 
 			calcLine1(0)
 		:
-			calcLine1(46.5);
+			calcLine1(40.5);
 	}
 
 	let i = 1;
@@ -552,15 +557,22 @@
 			pos4 = e.clientY;
 
 
+			const terminal_container = document.querySelector<HTMLElement>(".terminal_container");
+			let height = 50;
+			if(terminal_container && window.getComputedStyle(terminal_container).height == "500"){
+				height = -50;
+			}
 			// set the element's new position:
+			
 			const nextLeft = elmnt.offsetLeft - pos1;
 			const nextTop = elmnt.offsetTop - pos2;
 			if(nextLeft <= (contentInnerWidth - (75 * 2)) &&  nextLeft >= 0 + 75 ){
 				elmnt.style.left = nextLeft + "px";
 			}
-			if(nextTop <= (content!.scrollHeight - 575) && nextTop >= 0 - 50){
+			if(nextTop <= (content!.scrollHeight) && nextTop >= 0 - 50){
 				elmnt.style.top = nextTop + "px";
 			}	
+			
 		}
 
 		function closeDragElement() {
@@ -621,7 +633,7 @@
 				'url("/assets/open_folder_yellow.svg")',
 				'important'
 			);
-			calcLine1(46.5);
+			calcLine1(40.5);
 		}
 	}
 
@@ -700,43 +712,57 @@
 			}
 		}	
 	}
-
+	let minimized = true;
 
 	const lvl1 = document.querySelector('.lvl1');
 	lvl1?.addEventListener('click', () => {
     // const inside = document.querySelector('.inside');
 		toggleLvl2()
-		calcLine1(46.5);
+		calcLine1(40.5);
   });
 		
 
 		
 		const terminal_input = document.querySelector<HTMLElement>('.input');
 
-
-		const terminal = document.querySelector<HTMLElement>('.terminal_container');
-		const terminal_inner = terminal?.querySelector<HTMLElement>('.terminal_inner')
+		const mydiv = document.querySelector<HTMLElement>('#mydiv');
+		const terminal_container = document.querySelector<HTMLElement>('.terminal_container');
+		const terminal_inner = terminal_container?.querySelector<HTMLElement>('.terminal_inner')
 		const terminal_title = document.querySelector<HTMLElement>(".terminal_title");
 		const minimized_header = document.getElementById('mydivheader');
 		const minimized_terminal = document.querySelector<HTMLElement>('.minimized_terminal');
-
 		minimized_terminal?.addEventListener('click', () => {
-			if(minimized_header && terminal && terminal_inner && minimize_button && terminal_title)
-			{
-				console.log("hellof")
-				terminal.style.display = "flex";
-				terminal_inner.style.display = "block";
-				terminal.style.width = "800px";
-				terminal.style.height = "500px";
-				minimized_header.style.width = "100%";
-				minimized_header.style.height = "50px";
-				minimized_header.style.backgroundColor = "white";
-				minimized_header.style.display = "flex";
-				minimize_button.style.display = "block";
-				terminal_title.style.display = "block";
-				terminal.style.transition = "all 0.3s ease-in-out";
+			if(terminal_container && minimized_header && terminal_inner && minimize_button && terminal_title && mydiv){
+				if(minimized){
+						console.log("hellof")
+						terminal_container.style.display = "flex";
+						terminal_inner.style.display = "block";
+						terminal_container.style.width = "600px";
+						terminal_container.style.height = "500px";
+						mydiv.style.left = `${(window.innerWidth / 2)}px`
+						mydiv.style.top = `${(window.innerHeight / 2) - 200}px`
+						minimized_header.style.width = "100%";
+						minimized_header.style.height = "50px";
+						minimized_header.style.backgroundColor = "white";
+						minimized_header.style.display = "flex";
+						minimize_button.style.display = "block";
+						terminal_title.style.display = "block";
+						terminal_container.style.transition = "all 0.3s ease-in-out";
+						minimized = false;
 
+				}else{
+					terminal_inner.style.display = "none";
+					terminal_container.style.display = "none";
+					minimized_header.style.display = "none";
+
+					minimized_header.style.width = "150px";
+					minimized_header.style.height = "150px";
+					minimize_button.style.display = "none";
+					terminal_title.style.display = "none";
+					minimized = true;
+				}
 			}
+			
 		});
 
 
@@ -746,16 +772,17 @@
 		minimize_button?.addEventListener('click', (e) => {
 			e.stopPropagation(); // to stop it from clicking outer terminal container
 
-			if(terminal && terminal_inner && terminal_input && header && terminal_title){
+			if(terminal_container && terminal_inner && terminal_input && header && terminal_title){
 				// minimize_button.style.display = "none";
 				terminal_inner.style.display = "none";
-				terminal.style.display = "none";
+				terminal_container.style.display = "none";
 				header.style.display = "none";
 
 				header.style.width = "150px";
 				header.style.height = "150px";
 				minimize_button.style.display = "none";
 				terminal_title.style.display = "none";
+				minimized = true;
 			}
 		});
 
@@ -776,30 +803,6 @@
 			
 		}
 	});
-
-	/*
-	function toggleSelectedFolder(folder: HTMLElement | null){
-		if(folder){
-			if(folder.dataset.folder === "closed"){
-				console.log(getComputedStyle(folder).backgroundImage)
-				folder.style.setProperty(
-					'background-image',
-					'url("src/assets/folder_yellow.svg")',
-					'important'
-				) 	
-				folder.dataset.folder = "selected";
-			} else{
-				console.log(getComputedStyle(folder).backgroundImage)
-				folder.style.setProperty(
-					'background-image',
-					'url("src/assets/folder.svg")',
-					'important'
-				) 	
-				folder.dataset.folder = "closed";
-			}
-		}
-	}
-		*/
 
 		function traverse(): Map<string, ParentAndChild>{
 			let hold: Map<string, ParentAndChild> = tree;
@@ -884,15 +887,6 @@
 						const commandText = terminal_input.textContent || " ";//the bare input text
 						let commandTrimStart = commandText.trimStart().split(" ");//the input text without any white space at the start and split
 						let commandTrimAll = commandText.trim().split(" ");//the input text without any white space and split
-
-						// if(commandText.trimStart() != commandText.trim() && commandTrimAll.length != 1 && commandTrimAll[0] != 'cd'){
-						// 	console.log(commandText.trimStart(), "eqaul", commandText.trim());
-						// 	event.preventDefault();
-						// 	break;
-						// }
-						// commandTrimStart = commandTrimStart.filter((ele) => {
-						// 	if(ele != "") return ele
-						// })
 
 						commandTrimAll = commandTrimAll.filter((ele) => {
 							if(ele != "") return ele
@@ -1241,21 +1235,21 @@
 	.title {
 		font-family: "Bayon";
 		align-self: center;
-		line-height: 125px;
-		font-size: 10.5em;
+		line-height: 50px;
+		font-size: 6.5em;
 		color: white;
 	}
 	.position {
 		font-family: "Bayon";
 		align-self: center;
-		font-size: 2.5em;
+		font-size: 2em;
 		margin-top: 20px;
 		color: white;
 	}
 	.content .inner{
 		width: 100%;
 		height: 100%;
-		margin-top: 50px;
+		margin-top: 25px;
 		margin-bottom: 50px;
 		margin-left: 35px;
 		position: relative;
@@ -1263,11 +1257,11 @@
 	}
 	.intro{
 		align-self: center;
-		font-size: 3.5em;
+		font-size: 2em;
 		color: white;
 	}
 	.inner .instructions{
-		font-size: 2em;
+		font-size: 1.25em;
 		color: white;
 	}
 	.row{
@@ -1288,18 +1282,17 @@
 		margin-top: 20px;
 		display: flex;
 		flex-direction: row;
-		background-color: bl;
 	}
 	.directory{
 		display: flex;
-		font-size: 2em;
+		font-size: 1.5em;
 		color: white;
 		align-items: center;
 		width: fit-content;
 		border-bottom: 2.5px solid white;
 	}
 	.right_arrow{
-		width: 50px;
+		width: 35px;
 	}
 	.directory:link{
 		text-decoration: none;
@@ -1325,7 +1318,7 @@
 	}
 	.project_overview{
 		margin-top: 20px;
-		font-size: 24px;
+		font-size: 1.25em;
 		color: white;
 		width: 50vw;
 	}
@@ -1340,7 +1333,7 @@
 		display: none;
 	}
 	.top{
-		margin-top: 50px;
+		margin-top: 25px;
 	}
 	.terminal_container{
 		display: none;
@@ -1359,7 +1352,7 @@
 	.header{
 		z-index: 15;
 		width: 100%;
-		height: 50px;
+		height: 25px;
 		background-color: white;
 		border-top-left-radius: 15px;
 		border-top-right-radius: 15px;
@@ -1394,7 +1387,7 @@
 		align-items: start;
 		flex-direction: column;
 		overflow:scroll;
-		height: 450px;
+		height: 90%;
 		width: 100%;
 	}
 	.terminal_line{
@@ -1440,7 +1433,6 @@
 		width: 100px;
 		height: 100px;
 		position: fixed;
-		background-color: #323232;
 		z-index: 15;
 		bottom: 20px;
 		right: 20px;
@@ -1482,16 +1474,32 @@
 		background-attachment: fixed; /* ✅ Keeps background stationary */
 		height: 100vh;
 	}
+	.terminal_logo{
+		width: 2rem;
+		height: 2rem;
+		background-image: url("/assets/terminal.svg");
+		z-index: 20;
+		background-repeat: no-repeat;
+		background-size: contain;       /* ←❗ this ensures the SVG fits the container */
+		margin-top: 15px;
+		margin-left: 10px;
+		align-self: flex-start;
+
+	}
 
 
 	@media (max-width: 800px) {
 		.title {			
-			font-size: 7em;
-			line-height: 75px;
+			font-size: 5.5em;
+			line-height: 50px;
 		}
 		.position{
 			margin-top: 10px;
 			font-size: 2em;
+		}
+		.terminal_container{
+			width: 400px !important;;
+			height: 300px !important;;
 		}
   }
 	
