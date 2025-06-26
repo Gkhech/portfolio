@@ -1,0 +1,65 @@
+---
+
+	export interface ProjectInfo {
+		tech_stack: string,
+		project_overview: string,
+	}
+
+  export const projects = [
+    {
+      id: "plant_dad",
+      filename: "plant_dad.txt",
+      tech_stack:
+        "Nextjs, NestJs, Clerk, React, Tailwindcss, Typescript, Postgres, Redis, OpenAI, Google Cloud Storage, PlantNet API, Git",
+      overview:
+        "Full-stack Houseplant maintenance web app using fine-tuned LLM models and plantNet for plant identification and tailored care suggestions. Features a simple, user-friendly interface to view all your plants and track their health.",
+    },
+    {
+      id: "uic_api",
+      filename: "uic_api.txt",
+      tech_stack:
+        "Astro, Go, Auth0, React, Typescript, Postgres, Redis, Graphviz, Git",
+      overview:
+        "Full-stack RESTful API for developers building solutions with UIC grade distribution, lecture, and professor data. Project features user authentication and generates visual graphs of class prerequisites using Graphviz for clear dependency visualization.",
+    },
+    {
+      id: "interview_diver",
+      filename: "interview_diver.txt",
+      tech_stack: "Nextjs, Express, React, Tailwindcss, Typescript, Redis, OpenAI, Git",
+      overview: "Web app that allows individuals to practice behavioral interviews with tailored feedback.",
+    },
+    {
+      id: "word_game",
+      filename: "word_game.txt",
+      tech_stack: "Maven, Java, Git",
+      overview:
+        "Built a client-server word game where multiple clients can connect to the server and play their own individual games simultaneously. Each client session runs independently, allowing users to play without affecting others.",
+    },
+    {
+      id: "ali",
+      filename: "assembly_language_interpreter.txt",
+      tech_stack: "C++, Git",
+      overview:
+        "A project that simulates an assembly-like instruction set with operations like DEC, LDA, LDI, STR, ADD, and SUB, using the command pattern for dynamic execution. It manages an accumulator, data register, and memory for data storage and manipulation.",
+    },
+    {
+      id: "open_street_maps",
+      filename: "open_street_maps.txt",
+      tech_stack: "C++, Google Test, Git",
+      overview:
+        "Developed a custom Dijkstra algorithm to find the shortest path using data points from the UIC campus. Utilized Google test to ensure proper functionality.",
+    },
+  ];
+
+
+	export const file_map = new Map<string, ProjectInfo>(
+    projects.map((p) => [
+      p.filename,
+      {
+        tech_stack: `tech_stack : ${p.tech_stack}`,
+        project_overview: `project_overview : ${p.overview}`,
+      },
+    ])
+  );
+
+---

@@ -1,13 +1,14 @@
 ---
-
+import { projects } from "../components/data.astro"; // if external; or define above
 ---
-
-
 
 
 <div id="container">
 	<div class = "content">
 		<div class="navbar">
+			<a class="nav_item" target = "_blank" href="https://drive.google.com/file/d/1ABNumKgpDbWP7AUFDB4uL7UODojpNrFE/view?usp=sharing"> 
+				Resume
+			</a>
 			<a class="nav_item" target = "_blank" href="https://github.com/Gkhech"> 
 				Github
 			</a>
@@ -50,86 +51,23 @@
 							<div class="line2"> 
 							</div>
 							<div class="col">
-
-								<!-- <div class="col directory_hold"> -->
-									<div class = "directory_container" id="top"> 
+								{projects.map((project) => (
+									<>
+										<div class="directory_container" id={project.id === 'plant_dad' ? 'top' : project.id === 'open_street_maps' ? 'bottom' : undefined}> 
 											<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 											<div class="directory"> 
-												plant_dad.txt<div class="folder_icon" data-folder="closed" />
-											</div>
-
-											
-									</div>
-
-									<div class = "project_overview_container"  id = "plant_dad">
-										<div class = "project_overview" >tech_stack : Nextjs, NestJs, Clerk, React, Tailwindcss, Typescript, Postgres, Redis, OpenAI, Google Cloud Storage, PlantNet API, Git</div>
-										<div class = "project_overview" >project_overview : Full-stack Houseplant maintenance web app using fine-tuned LLM models and plantNet for plant identification and tailored care suggestions. Features a simple, user-friendly interface to view all your plants and track their health.</div>
-									</div>
-
-
-									<div class = "directory_container"> 
-										<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
-										<div class="directory"> 
-											uic_api.txt<div class="folder_icon" data-folder="closed" />
+												{project.filename}
+												<div class="folder_icon" data-folder="closed" />
+											</div>											
 										</div>
-									</div>
 
-									<div class = "project_overview_container"  id = "uic_api">
-										<div class = "project_overview" >tech_stack : Astro, Go, Auth0, React, Typescript, Postgres, Redis, Graphviz, Git </div>
-										<div class = "project_overview" >project_overview : Full-stack RESTful API for developers building solutions with UIC grade distribution, lecture, and professor data. Project features user authentication and generates visual graphs of class prerequisites using Graphviz for clear dependency visualization.</div>
-									</div>
-
-								<div class = "project_overview_container"  class = "directory_container"> 
-									<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
-									<div class="directory"> 
-										interview_diver.txt<div class="folder_icon" data-folder="closed" />
-									</div>
-								</div>
-
-								<div class = "project_overview_container"  id = "interview_diver">
-									<div class = "project_overview" >tech_stack : Nextjs, Express, React, Tailwindcss, Typescript, Redis, OpenAI, Git</div>
-									<div class = "project_overview" >project_overview : Web app that allows individuals to practice behavioral interviews with tailored feedback. </div>
-								</div>
-
-								<div class = "directory_container"> 
-									<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
-									<div class="directory"> 
-										word_game.txt<div class="folder_icon" data-folder="closed" />
-									</div>
-								</div>
-
-								<div class = "project_overview_container" id = "word_game">
-									<div class = "project_overview" >tech_stack : Maven, Java, Git </div>
-									<div class = "project_overview" >project_overview: Built a client-server word game where multiple clients can connect to the server and play their own individual games simultaneously. Each client session runs independently, allowing users to play without affecting others.</div>
-								</div>
-
-								<div class = "directory_container"> 
-									<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
-									<div class="directory"> 
-										assembly_language_interpreter.txt<div class="folder_icon" data-folder="closed"/>
-									</div>
-								</div>
-
-								<div class = "project_overview_container"  id = "ali">
-									<div class = "project_overview" >tech_stack : C++, Git</div>
-									<div class = "project_overview" >project_overview : A project that simulates an assembly-like instruction set with operations like DEC, LDA, LDI, STR, ADD, and SUB, using the command pattern for dynamic execution. It manages an accumulator, data register, and memory for data storage and manipulation.</div>
-								</div>
-
-								<div class = "directory_container" id="bottom"> 
-									<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
-									<div class="directory"> 
-										open_street_maps.txt<div class="folder_icon" data-folder="closed" />
-									</div>
-								</div>
-
-								<div class = "project_overview_container"  id = "open_street_maps">
-									<div class = "project_overview" >tech_stack : C++, Google Test, Git </div>
-									<div class = "project_overview" >project_overview : Developed a custom Dijkstra algorithm to find the shortest path using data points from the UIC campus. Utilized Google test to ensure proper functionality.</div>
-								</div>
-
+										<div class="project_overview_container" id={project.id}>
+											<div class="project_overview">tech_stack : {project.tech_stack}</div>
+											<div class="project_overview">project_overview : {project.overview}</div>
+										</div>
+									</>
+								))}
 							</div>
-
-							
 						</div>
 						
 					<div class = "directory_container lvl1" id="lvl1_bottom" data-folder="closed"> 
@@ -144,25 +82,17 @@
 				</div>
 			</div>
 
-		
-
-			
-
 			<div id="mydiv">
-				
 				<div id="mydivheader">
 					<div class = "terminal_title"> gors -- zsh </div>
 				</div>
 				<div class = "terminal_container">
-					
 					<div class = "terminal_inner"> 
-
-					<div class = "console_container">					
-						<div class="terminal_line">
-							<div class="input" contenteditable="false" spellcheck="false" data-prompt="gor@Gors-MacBook-Pro-3 ~ % "></div>
+						<div class = "console_container">					
+							<div class="terminal_line">
+								<div class="input" contenteditable="false" spellcheck="false" data-prompt="gor@Gors-MacBook-Pro-3 ~ % "></div>
+							</div>
 						</div>
-					</div>
-
 					</div>
 				</div>
 				
@@ -173,25 +103,25 @@
 			</div> 
 
 		</div>
-
 	</div>
-	<div class="matches"> 
-			</div>
+	<div class="matches"></div>
 </div>
 
 
 
 
 <script>
-
-
-	let curr_dir = "gor";
-	let matches: any = document.querySelector<HTMLElement>('.matches');
+	import { file_map } from "./data.astro";
 
 	interface ParentAndChild{
 		parent: string,
 		children: Map<string, ParentAndChild>,
 	}
+
+
+	let curr_dir = "gor";
+	let matches: any = document.querySelector<HTMLElement>('.matches');
+
 
 	const personal_projects_map: Map<string, ParentAndChild> = new Map();
 	personal_projects_map.set("plant_dad.txt", {parent: "personal_projects", children: new Map()});
@@ -224,40 +154,6 @@
 	parent_map.set("assembly_language_interpreter.txt", "personal_projects");
 	parent_map.set("open_street_maps.txt", "personal_projects");
 
-	interface ProjectInfo {
-		tech_stack: string,
-		project_overview: string,
-	}
-
-	const file_map = new Map<string, ProjectInfo>();
-	file_map.set("resume", {
-		tech_stack: "tech_stack : Nextjs, NestJs, Clerk, React, Tailwindcss, Typescript, Postgres, Redis, OpenAI, Google Cloud Storage, PlantNet AP, Git", 
-		project_overview: "Full-stack Houseplant maintenance web app using fine-tuned LLM models and plantNet for plant identification and tailored care suggestions. Features a simple, user-friendly interface to view all your plants and track their health."
-	});
-
-	file_map.set("plant_dad.txt", {
-		tech_stack: "tech_stack : Nextjs, NestJs, Clerk, React, Tailwindcss, Typescript, Postgres, Redis, OpenAI, Google Cloud Storage, PlantNet AP, Git", 
-		project_overview: "project_overview : Full-stack Houseplant maintenance web app using fine-tuned LLM models and plantNet for plant identification and tailored care suggestions. Features a simple, user-friendly interface to view all your plants and track their health."
-	});
-
-	file_map.set("uic_api.txt",  {
-		tech_stack: "tech_stack : Astro, Go, Auth0, React, Typescript, Postgres, Redis, Graphviz, Git", 
-		project_overview: "project_overview : Full-stack RESTful API for developers building solutions with UIC grade distribution, lecture, and professor data. Project features user authentication and generates visual graphs of class prerequisites using Graphviz for clear dependency visualization."
-	});
-
-	file_map.set("word_game.txt", {
-		tech_stack: "tech_stack : Maven, Java, Junit, Git", 
-		project_overview: "project_overview: Built a client-server word game where multiple clients can connect to the server and play their own individual games simultaneously. Each client session runs independently, allowing users to play without affecting others."
-	});
-	file_map.set("assembly_language_interpreter.txt",  {
-		tech_stack: "tech_stack: C++, Git",
-		project_overview: "project_overview : A project that simulates an assembly-like instruction set with operations like DEC, LDA, LDI, STR, ADD, and SUB, using the command pattern for dynamic execution. It manages an accumulator, data register, and memory for data storage and manipulation."
-	});
-	file_map.set("open_street_maps.txt",  {
-		tech_stack: "C++, Google Test, Git", 
-		project_overview: "project_overview : Developed a custom Dijkstra algorithm to find the shortest path using data points from the UIC campus. Utilized Google test to ensure proper functionality."
-	});
-
 	const elements = [
 		"gor", 
 		"gors_desktop",
@@ -269,9 +165,6 @@
 		"assembly_language_interpreter.txt",
 		"open_street_maps.txt"
 	]
-
-
-	
 
 	function calcLine2(){
 		let lineExtension = 46.5;
@@ -745,6 +638,8 @@
 		const terminal_title = document.querySelector<HTMLElement>(".terminal_title");
 		const minimized_header = document.getElementById('mydivheader');
 		const minimized_terminal = document.querySelector<HTMLElement>('.minimized_terminal');
+		const content = document.querySelector<HTMLElement>(".content"); // Adjust if needed
+
 		minimized_terminal?.addEventListener('click', () => {
 			if(terminal_container && minimized_header && terminal_inner && terminal_title && mydiv){
 				if(minimized){
@@ -752,9 +647,9 @@
 						terminal_container.style.display = "flex";
 						terminal_inner.style.display = "block";
 						terminal_container.style.width = "600px";
-						terminal_container.style.height = "500px";
+						terminal_container.style.height = "450px";
 						mydiv.style.left = `${(window.innerWidth / 2)}px`
-						mydiv.style.top = `${(window.innerHeight / 2) - 200}px`
+						mydiv.style.top = `${(content!.scrollHeight / 2) - 200}px`
 						minimized_header.style.width = "100%";
 						minimized_header.style.height = "50px";
 						minimized_header.style.backgroundColor = "white";
