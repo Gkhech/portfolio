@@ -1,10 +1,196 @@
-<div class="container">
-  ABOUT
+---
+---
+
+<div id="container">
+  <div class = "content">
+		<div class="navbar">
+			<a class="nav_item" target = "_blank" href="https://drive.google.com/file/d/1ABNumKgpDbWP7AUFDB4uL7UODojpNrFE/view?usp=sharing"> 
+				Resume
+			</a>
+			<a class="nav_item" target = "_blank" href="https://github.com/Gkhech"> 
+				Github
+			</a>
+			<a class="nav_item" target = "_blank" href="https://www.linkedin.com/in/gor-khechyan-912a4821a/"> 
+				Linkedin
+			</a>
+			<a class="nav_item end" href="/"> 
+				Home
+			</a>
+		</div>
+		<div class="title" >About</div>
+		<div class="position" >Gor_Khechyan</div>
+		
+		<div class="inner"> 
+			<div class="about_me_text">
+        <span>Hi, I'm Gor Khechyan.</span><br><br>
+        <span>I graduated with a bachelor's degree in Computer Science from University of Illinois at Chicago in the spring of 2025. I love cooking, learning new things, drawing, and using code to solve everyday problems.</span>
+        <span>I previously interned at Vail Systems as a full-stack web software engineer. I got to work on a tight-knit team, where I really enjoyed having the space to be ambitious in a super collaborative environment.</span>
+        <span>These days, I keep working on projects I'm passionate about while always looking for new ways to challenge myself and grow.</span><br><br>
+        <span>Thanks for checking out my portfolio, I would love to connect and chat about cool projects and opportunities!</span>
+      </div>
+		</div>
+	</div>
 </div>
 
+
+
 <style>
-  .container{
-    width: 100%;
-    height: 100%;
+
+  html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		overscroll-behavior: none;
+    font-family: "Oswald";
+
+	}
+	@font-face {
+		font-family: 'Oswald';
+		src: url('/fonts/Oswald-VariableFont_wght.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'Bayon';
+		src: url('/fonts/Bayon-Regular.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+
+  #container {
+		background-image: url("/assets/background.png");
+		/* background-position: center; */
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-attachment: fixed; /* ✅ Keeps background stationary */
+		height: 100vh;
+	}
+	.content {
+    overflow-y: auto;          
+		position: relative;
+		display: flex;
+		width: 100%;
+		height: 100%;
+		flex-direction: column;
+	}
+	.navbar{
+		font-family: "Bayon";
+		display: flex;
+		width: 100%;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		gap: 20px;
+		justify-content: end;
+		align-items: center;
+    z-index: 25;
+	}
+
+	.end {
+		margin-right: 35px;
+	}
+	.nav_item {
+		color: white;
+		font-size: x-large;
+	}
+
+  .nav_item:link{
+		text-decoration: none;
+	}
+	.title {
+		font-family: "Bayon";
+		align-self: center;
+		line-height: 50px;
+		font-size: 6.5em;
+		color: white;
+	}
+	.position {
+		font-family: "Bayon";
+		align-self: center;
+		font-size: 2em;
+		margin-top: 20px;
+		color: white;
+	}
+	.content .inner{
+    display: flex;
+    justify-content: center;
+		width: 100%;
+		height: 100%;
+		margin-top: 50px;
+		margin-bottom: 50px;
+		margin-left: 35px;
+		position: relative;
+
+		/* background-color: grey; */
+	}
+
+  .about_me_text{
+    width: 50%;
+    font-size: 1.5em;
+    color: white;
   }
+
+	@media (max-width: 800px) {
+		.title {			
+			font-size: 5.5em;
+			line-height: 50px;
+		}
+		.position{
+			margin-top: 10px;
+			font-size: 2em;
+		}
+		.terminal_container{
+			width: 400px !important;;
+			height: 300px !important;;
+		}
+
+    .about_me_text{
+      width: 75%;
+      font-size: 1.5em;
+      color: white;
+    }
+
+    .navbar{
+			justify-content: center;
+		}
+    .end{
+			margin-right: 0px;
+		}
+  }
+
+	@media (max-width: 450px) {
+		body{
+			margin-left: 0;
+			margin-right: 0;
+		}
+		.title {			
+			font-size: 4em;
+			line-height: 50px;
+		}
+		.position{
+			margin-top: 10px;
+			font-size: 2em;
+		}
+
+		.inner .instructions{
+			font-size: 1.15em;
+			color: white;
+		}
+
+		.inside{
+			align-self: flex-start;
+			/* margin-left: 50px; */
+		}
+    .about_me_text{
+      width: 80%;
+      font-size: 1.5em;
+      color: white;
+    }
+
+		#container {		
+			background-position: 10% center; /* 👈 shifts image to the left */
+		}
+	}
 </style>
