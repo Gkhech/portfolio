@@ -3,9 +3,14 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href="/GK.svg" />
+		<!-- <link rel="preload" href="/fonts/Oswald-Regular.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="/fonts/Bayon-Regular.woff2" as="font" type="font/woff2" crossorigin /> -->
+		<link rel="stylesheet" href="/src/styles/fonts.css" />
+
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>my_portfolio</title>
+		
 	</head>
 	<body>
 		<slot />
@@ -20,20 +25,7 @@
 		height: 100%;
 		overscroll-behavior: none;
 		font-family: "Oswald";
-	}
-	@font-face {
-		font-family: 'Oswald';
-		src: url('/fonts/Oswald-VariableFont_wght.ttf') format('truetype');
-		font-weight: normal;
-		font-style: normal;
-		font-display: swap;
-	}
-	@font-face {
-		font-family: 'Bayon';
-		src: url('/fonts/Bayon-Regular.ttf') format('truetype');
-		font-weight: normal;
-		font-style: normal;
-		font-display: swap;
+		
 	}
 </style>
 

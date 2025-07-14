@@ -34,7 +34,7 @@ import { projects } from "../components/data.astro"; // if external; or define a
 
 
 			<div class="directory top" data-folder="closed"> 
-				gors_desktop <div id = "gors_desktop" class="folder_icon" data-folder="closed" />
+				gors_desktop <div id = "gors_desktop" class="folder_icon folder" data-folder="closed" />
 			</div>
 		
 			<div class="row" data-folder="closed">
@@ -45,7 +45,7 @@ import { projects } from "../components/data.astro"; // if external; or define a
 						<div class = "directory_container lvl1" id="lvl1_top" data-folder="closed"> 
 							<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 							<div class="directory"> 
-								personal_projects <div id = "personal_projects" class="folder_icon" data-folder="closed" />
+								personal_projects <div id = "personal_projects" class="folder_icon folder" data-folder="closed" />
 							</div>
 						</div>
 						
@@ -59,7 +59,7 @@ import { projects } from "../components/data.astro"; // if external; or define a
 											<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 											<div class="directory"> 
 												{project.filename}
-												<div class="folder_icon" data-folder="closed" />
+												<div class="folder_icon folder" data-folder="closed" />
 											</div>											
 										</div>
 
@@ -196,7 +196,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 		if(contentInnerWidth <= 450 && lineExtension != 0){
 			lineExtension -= 14.5;
 		}
-		console.log("lineExtension", lineExtension);
 		const top = document.getElementById("lvl1_top");
 		const bottom = document.getElementById("lvl1_bottom")
 		if (top && bottom) {
@@ -208,7 +207,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 			const line2 = document.querySelector<HTMLElement>(".line");
 			if(line2){
 				line2.style.height = `${(yPosition2 - yPosition) + lineExtension}px`;
-				console.log("line2.style.height", yPosition2, yPosition);
 			}
 		}
 	}
@@ -216,32 +214,24 @@ import { projects } from "../components/data.astro"; // if external; or define a
 	function toggleFolder(folder: HTMLElement | null){
 		if(folder){
 			if(folder.dataset.folder == "closed"){
-				folder.style.setProperty(
-					'background-image',
-					`url(/assets/open_folder_yellow.svg)`,
-					'important'
-				)
-		
+				folder.classList.remove("folder_icon");
+				folder.classList.add("folder_icon_open");
+	
 				folder.dataset.folder = "open";
 			}else{
-				folder.style.setProperty(
-					'background-image',
-					'url("/assets/folder.svg")',
-					'important'
-				)
-				
+				folder.classList.remove("folder_icon_open");
+				folder.classList.add("folder_icon");
+
 				folder.dataset.folder = "closed";
 			}
-			console.log('New classes:', folder.classList.toString());
 		}
 	}
 
 
 	document.querySelectorAll<HTMLElement>(".directory_container")?.forEach((ele) => {
 		ele.addEventListener('click', (e) => {
-			const proj_overview_container = ele.nextElementSibling as HTMLElement; // .directory_hold
-			
-			toggleFolder(ele.querySelector<HTMLElement>(".folder_icon"));
+			const proj_overview_container = ele.nextElementSibling as HTMLElement; 
+			toggleFolder(ele.querySelector<HTMLElement>(".folder"));
 
 			if (proj_overview_container?.classList.contains("project_overview_container")) {//validate
 				if (proj_overview_container) {
@@ -277,7 +267,7 @@ import { projects } from "../components/data.astro"; // if external; or define a
 	function updateContentInnerWidth(){
 		contentInnerWidth = window.innerWidth;
 		calcLine2();
-		document.querySelector<HTMLElement>(".folder_icon")?.dataset.folder != "open" ?
+		document.querySelector<HTMLElement>(".folder")?.dataset.folder != "open" ?
 			calcLine1(0)
 		:
 			calcLine1(40.5);
@@ -285,25 +275,18 @@ import { projects } from "../components/data.astro"; // if external; or define a
 
 	let i = 1;
 	matches.addEventListener("focusin", (e: any) => {
-		console.log("A child inside .matches received focus");
 
 		if(matches){
 			const size = matches.childElementCount;
-			console.log("size", size)
-				matches.onkeydown = function(event: any) {	
-					console.log("index", i)			
-					
-
+				matches.onkeydown = function(event: any) {						
 					if(event.key == "ArrowDown") {
 						if(i >= size) return
 						i += 1;
-						console.log('down');
 					}
 					
 					if(event.key == "ArrowUp") {
 						if(i <= 1) return
 						i  -= 1;
-						console.log('up');
 					}
 
 					const curr_button = document.getElementById(`${i}`);
@@ -312,7 +295,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 					}
 
 					if(event.key == "Escape" || event.key == "Esc") {
-						console.log("esc")
 						event.preventDefault();
 						const input_div = document.querySelector<HTMLElement>('.input');
 						if(input_div){
@@ -322,7 +304,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 					}
 
 					if(event.key == "Enter"){
-						console.log("in matches enter")
 						event.preventDefault();
 						const input_div = document.querySelector<HTMLElement>('.input');
 						const commandText = input_div?.innerHTML;
@@ -495,11 +476,8 @@ import { projects } from "../components/data.astro"; // if external; or define a
 
 		function closeLvl1v2(gors_desktop_folder: HTMLElement, lvl1: NodeListOf<HTMLElement>, folder_icon: NodeListOf<HTMLElement>){
 			folder_icon?.forEach((folder) => {
-				folder.style.setProperty(
-					'background-image',
-					'url("/assets/folder.svg")',
-					'important'
-				)
+				folder.classList.remove("folder_icon_open");
+				folder.classList.add("folder_icon");
 				folder.dataset.folder = "closed";
 			})
 
@@ -508,11 +486,9 @@ import { projects } from "../components/data.astro"; // if external; or define a
 			});	
 
 			gors_desktop_folder.dataset.folder = "closed";
-			gors_desktop_folder.style.setProperty(
-				'background-image',
-				'url("/assets/folder.svg")',
-				'important'
-			)
+			gors_desktop_folder.classList.remove("folder_icon_open");
+			gors_desktop_folder.classList.add("folder_icon");
+			
 			calcLine1(0);
 	}
 
@@ -522,27 +498,19 @@ import { projects } from "../components/data.astro"; // if external; or define a
 	
 		const lvl2 = document.querySelector<HTMLElement>('.lvl2');
 
-		
-
-		const folder_icon = document.querySelectorAll<HTMLElement>('.folder_icon');
 		const lvl1 = document.querySelectorAll<HTMLElement>('.lvl1');
 		
 		
 		if(lvl1 && gors_desktop_folder){
-			console.log("PREE", gors_desktop_folder.dataset.folder)
-	
-
-		console.log("lvl1", lvl1);
 			lvl1.forEach((ele) => {
 				ele.setAttribute("style", "display: flex !important;") 
 			});	
 
 			gors_desktop_folder.dataset.folder = "open";
-			gors_desktop_folder.style.setProperty(
-				'background-image',
-				'url("/assets/open_folder_yellow.svg")',
-				'important'
-			);
+		
+				gors_desktop_folder.classList.remove("folder_icon");
+				gors_desktop_folder.classList.add("folder_icon_open");
+			
 			calcLine1(40.5);
 		}
 	}
@@ -556,14 +524,12 @@ import { projects } from "../components/data.astro"; // if external; or define a
 
 		
 
-		const folder_icon = document.querySelectorAll<HTMLElement>('.folder_icon');
+		const folder_icon = document.querySelectorAll<HTMLElement>('.folder');
 		const lvl1 = document.querySelectorAll<HTMLElement>('.lvl1');
 		
 		
 		if(lvl1 && gors_desktop_folder){
-			console.log("PREE", gors_desktop_folder.dataset.folder)
 			if(gors_desktop_folder.dataset.folder == "closed" || gors_desktop_folder.dataset.folder == "selected"){
-				console.log("called open lvl1")
 				openLvl1v2()
 			}else{
 				closeLvl1v2(gors_desktop_folder, lvl1, folder_icon)
@@ -584,13 +550,10 @@ import { projects } from "../components/data.astro"; // if external; or define a
 		document.querySelectorAll<HTMLElement>(".directory_container")?.forEach((ele) => {
 			const proj_overview_container = ele.nextElementSibling as HTMLElement; // .directory_hold
 			
-			const folder = ele.querySelector<HTMLElement>(".folder_icon");
+			const folder = ele.querySelector<HTMLElement>(".folder");
 			if(folder){
-				folder.style.setProperty(
-					'background-image',
-					'url("/assets/folder.svg")',
-					'important'
-				)
+				folder.classList.remove("folder_icon_open");
+				folder.classList.add("folder_icon");
 				folder.dataset.folder = "closed";
 			}
 		
@@ -646,7 +609,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 		minimized_terminal?.addEventListener('click', () => {
 			if(terminal_container && minimized_header && terminal_inner && terminal_title && mydiv){
 				if(minimized){
-						console.log("hellof")
 						terminal_container.style.display = "flex";
 						terminal_inner.style.display = "block";
 						terminal_container.style.width = "600px";
@@ -710,7 +672,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 
 					for (const [key, value] of current_map!.entries()) {
 						if (key === curr_dir) {
-							console.log("found value", value.children, " key ", key);
 							return value.children; // ✅ now exits traverse
 						}
 						queue.unshift(value.children);
@@ -736,7 +697,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 		}
 
 		function addToHistory(commandText: string, commandTrimAll: string[], historyContainer: HTMLElement, terminal_input: HTMLElement){
-			console.log("new dir found");
 			const newLine = document.createElement("div");
 
 			newLine.style.color = "white";
@@ -784,18 +744,12 @@ import { projects } from "../components/data.astro"; // if external; or define a
 							if(ele != "") return ele
 						})
 
-						console.log("commandTrimStart", commandTrimStart)
-						console.log("commandTrimAll", commandTrimAll)
-
-						
 
 						if(commandTrimAll.length == 1 && commandTrimStart.length == 1){
-							console.log("just cd or ls -> one word")
 							//we have just cd or ls no leading spaces
 						}
 						else if(commandTrimStart.length >= 1 && (commandTrimStart[0] == "cd" || commandTrimStart[0] == "cat") ){//changed to >= 1 instead of == 1
 							//there are leading spaces 
-							console.log("leading spaces")
 							let command = "";
 							command = commandTrimStart[1];
 							
@@ -803,9 +757,7 @@ import { projects } from "../components/data.astro"; // if external; or define a
 							
 							for (const [index, value] of commandTrimStart.entries()) {
 								if(index == 0) continue;
-								console.log("index", index, " value", value);
 								if(value != ""){
-									console.log(commandTrimStart.slice(index).join(""))
 									command = commandTrimStart.slice(index).join(",");
 									break;
 								}
@@ -813,10 +765,8 @@ import { projects } from "../components/data.astro"; // if external; or define a
 												
 
 							const hold: Map<string, ParentAndChild> = traverse();//returns the child of a key that matches our current directory 
-							console.log("returned", hold, "command", command);
 
 							const allElementsStartWith: string[] = returnAllElementStartWith(command);
-							console.log("allElementsStartWith", allElementsStartWith)
 							
 							let filtered: string[] = [];
 							if(commandTrimStart[0] == "cd"){
@@ -834,7 +784,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 							}
 
 							
-							console.log("filtered", filtered)
 							if(filtered.length >= 1){
 								const children: HTMLElement[] = filtered.map((ele , index) => {
 									const autocomplete_option_div = document.createElement("button");
@@ -870,7 +819,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 						event.preventDefault();
 						break;
 					case "Enter":
-						console.log("IN KEYDOWN ENTER")
 						const historyContainer = document.querySelector<HTMLElement>('.console_container');
 
 						if (historyContainer && terminal_input) {
@@ -884,15 +832,12 @@ import { projects } from "../components/data.astro"; // if external; or define a
 
 							const newLine = document.createElement("div");
 
-							console.log("*", commandTextSplit, "*");
 							const hold: Map<string, ParentAndChild> = traverse();//returns the child of a key that matches our current directory 
-							console.log("before returned", hold, "command*", commandTrimAll, "*hold.has", hold.has(commandTrimAll[1]));
 							
 							commandTrimAll = commandTrimAll.filter((ele) => {
 								if(ele != "") return ele
 							})
 
-							console.log("after trim returned", hold, "command*", commandTrimAll, "*hold.has", hold.has(commandTrimAll[1]));
 							if(commandTrimAll.length == 1 && commandTrimAll[0] == "ls"){
 								newLine.style.color = "white";
 								newLine.style.whiteSpace = "pre-wrap";
@@ -925,9 +870,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 								historyContainer.scrollTop = historyContainer.scrollHeight;
 							}
 							else if(commandTrimAll[0] == "cat" && hold.has(commandTrimAll[1]) && commandTrimAll[1].endsWith(".txt") && file_map.has(commandTrimAll[1]) && commandTrimAll.length == 2){
-								console.log("in cat")
-
-								
 								newLine.style.color = "white";
 								newLine.style.whiteSpace = "pre-wrap";
 								newLine.style.wordBreak = "break-all";
@@ -982,9 +924,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 								historyContainer.scrollTop = historyContainer.scrollHeight;
 							}
 							else if(commandTrimAll[0] == "cd" && commandTrimAll[1] == ".."){
-								console.log("in cd ..")
-								// curr_dir =  parent_map.get(curr_dir);
-								// commandTrimAll[commandTrimAll.length - 1] = curr_dir;
 								
 								newLine.style.color = "white";
 								newLine.style.whiteSpace = "pre-wrap";
@@ -1009,11 +948,9 @@ import { projects } from "../components/data.astro"; // if external; or define a
 								
 							}
 							else if(commandTrimAll[0] == "cd" && hold.has(commandTrimAll[1]) && commandTrimAll.length == 2){
-								console.log("cd and directory")
 								addToHistory(commandText, commandTrimAll, historyContainer, terminal_input)
 							}
 							else if(commandTrimAll[0] == "cd" && commandTrimAll.length == 1){
-								console.log("only cd")
 								
 								const newLine = document.createElement("div");
 
@@ -1119,6 +1056,16 @@ import { projects } from "../components/data.astro"; // if external; or define a
 		width: 100%;
 		height: 100%;
 		flex-direction: column;
+		animation: title-load 300ms ease-in;
+	}
+		@keyframes title-load {
+		0% {
+			opacity: 0;
+		}
+
+		100%{
+			opacity: 1;
+		}
 	}
 	.navbar{
 		font-family: "Bayon";
@@ -1350,6 +1297,15 @@ import { projects } from "../components/data.astro"; // if external; or define a
 		background-size: cover;
 		transition: background-image 0.3s ease-in-out;
 	}
+
+	.folder_icon_open {
+		margin-left: 10px;
+		width: 3rem;
+		height: 3rem;
+		background-image: url("/assets/open_folder_yellow.svg");
+		background-size: cover;
+		transition: background-image 0.3s ease-in-out;
+	}
 	.folder_icon:hover {
 		background-image: url("/assets/folder_yellow.svg");
 	}
@@ -1361,10 +1317,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 		background-size: cover;
 		transition: background-image 0.3s ease-in-out;
 	}
-	.circle:hover {
-		background-image: url("/assets/circle.svg");
-	}
-
 	#container {
 		font-family: "Oswald";
 		background-image: url("/assets/background.png");
@@ -1459,7 +1411,7 @@ import { projects } from "../components/data.astro"; // if external; or define a
 			margin-left: 35px;
 		}
 		
-		.folder_icon {
+		.folder_icon, .folder_icon_open{
 			margin-left: 5px;
 			width: 1.5rem;
 			height: 1.5rem;

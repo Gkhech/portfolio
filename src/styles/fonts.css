@@ -1,0 +1,14 @@
+	@font-face {
+		font-family: 'Oswald';
+		src: url('/fonts/Oswald-Regular.woff2') format('woff2');
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'Bayon';
+		src: url('/fonts/Bayon-Regular.woff2') format('woff2');
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}

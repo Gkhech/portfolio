@@ -1,6 +1,11 @@
 ---
+import Layout from "../layouts/Layout.astro"
+
+// export const prerender = false
+
 ---
 
+<Layout>
 <div id="container">
   <div class = "content">
 		<div class="navbar">
@@ -31,12 +36,14 @@
 		</div>
 	</div>
 </div>
+</Layout>
+
 
 
 
 <style>
 
-  html,
+  /* html,
 	body {
 		margin: 0;
 		width: 100%;
@@ -46,18 +53,18 @@
 	}
 	@font-face {
 		font-family: 'Oswald';
-		src: url('/fonts/Oswald-VariableFont_wght.ttf') format('truetype');
+		src: url('/fonts/Oswald-Regular.woff2') format('woff2');
 		font-weight: normal;
 		font-style: normal;
 		font-display: swap;
 	}
 	@font-face {
 		font-family: 'Bayon';
-		src: url('/fonts/Bayon-Regular.ttf') format('truetype');
+		src: url('/fonts/Bayon-Regular.woff2') format('woff2');
 		font-weight: normal;
 		font-style: normal;
 		font-display: swap;
-	}
+	} */
 
   #container {
 		background-image: url("/assets/background.png");
