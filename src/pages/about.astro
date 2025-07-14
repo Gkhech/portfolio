@@ -42,30 +42,6 @@ import Layout from "../layouts/Layout.astro"
 
 
 <style>
-
-  /* html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		overscroll-behavior: none;
-    font-family: "Oswald";
-	}
-	@font-face {
-		font-family: 'Oswald';
-		src: url('/fonts/Oswald-Regular.woff2') format('woff2');
-		font-weight: normal;
-		font-style: normal;
-		font-display: swap;
-	}
-	@font-face {
-		font-family: 'Bayon';
-		src: url('/fonts/Bayon-Regular.woff2') format('woff2');
-		font-weight: normal;
-		font-style: normal;
-		font-display: swap;
-	} */
-
   #container {
 		background-image: url("/assets/background.png");
 		/* background-position: center; */
@@ -73,6 +49,7 @@ import Layout from "../layouts/Layout.astro"
 		background-size: cover;
 		background-attachment: fixed; /* ✅ Keeps background stationary */
 		height: 100vh;
+		
 	}
 	.content {
     overflow-y: auto;          
@@ -81,7 +58,18 @@ import Layout from "../layouts/Layout.astro"
 		width: 100%;
 		height: 100%;
 		flex-direction: column;
+		animation: page-load 300ms ease-in;
 	}
+	@keyframes page-load {
+		0% {
+			opacity: 0;
+		}
+
+		100%{
+			opacity: 1;
+		}
+	}
+
 	.navbar{
 		font-family: "Bayon";
 		display: flex;

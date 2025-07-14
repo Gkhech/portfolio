@@ -71,13 +71,19 @@ import { projects } from "../components/data.astro"; // if external; or define a
 								))}
 							</div>
 						</div>
-						
+
+					<!-- <div class = "directory_container lvl1"  data-folder="closed"> 
+					<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
+						<div class="directory"> 
+							client_work <div id = "personal_projects" class="folder_icon folder" data-folder="closed" />
+						</div>
+					</div> -->
+
 					<div class = "directory_container lvl1" id="lvl1_bottom" data-folder="closed"> 
 						<img class="right_arrow" src="/assets/right_arrow.svg" alt="right arrow" />
 						<a class = "directory" target = "_blank" href="https://drive.google.com/file/d/1ABNumKgpDbWP7AUFDB4uL7UODojpNrFE/view?usp=sharing"> 
 							resume <div class="circle" />
-						</a>
-						
+						</a>	
 					</div>
 					
 					
@@ -1056,9 +1062,9 @@ import { projects } from "../components/data.astro"; // if external; or define a
 		width: 100%;
 		height: 100%;
 		flex-direction: column;
-		animation: title-load 300ms ease-in;
+		animation: page-load 300ms ease-in;
 	}
-		@keyframes title-load {
+		@keyframes page-load {
 		0% {
 			opacity: 0;
 		}
