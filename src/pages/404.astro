@@ -1,0 +1,60 @@
+---
+import Layout from "../layouts/Layout.astro"
+
+// export const prerender = false
+
+---
+
+
+<Layout>
+  <div id="container">
+    <div class="title" >404 - Page Not Found :(</div>
+  </div>
+</Layout>
+
+<style>
+  #container {
+		background-image: url("/assets/background.png");
+		/* background-position: center; */
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-attachment: fixed; /* ✅ Keeps background stationary */
+		height: 100vh;
+
+    display: flex;
+    justify-content: center;
+	}
+
+  .title {
+		font-family: "Bayon";
+		align-self: center;
+		line-height: 50px;
+		font-size: 5.5em;
+		color: white;
+	}
+
+  @media (max-width: 800px) {
+		.title {			
+			font-size: 4em;
+			line-height: 50px;
+		}
+  }
+
+	@media (max-width: 600px) {
+		.title {			
+			font-size: 2em;
+			line-height: 50px;
+		}
+
+		#container {		
+			background-position: 10% center; /* 👈 shifts image to the left */
+		}
+	}
+
+  @media (max-width: 300px) {
+		.title {			
+			font-size: 1.0em;
+			line-height: 50px;
+		}
+	}
+</style>
