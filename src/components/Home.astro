@@ -316,49 +316,7 @@ import { projects } from "../components/data.astro"; // if external; or define a
 						const commandTextSplit = commandText?.split(" ");
 						commandTextSplit![commandTextSplit!.length - 1] = document.getElementById(`${i}`)?.innerHTML || " ";
 						input_div!.innerHTML = commandTextSplit!.join(" ");
-						/*
-							✅ inputEl.focus();
-							Purpose: Puts the keyboard focus on the .input element.
-
-							Why it's needed: You must focus the element before manipulating the caret/selection, or the selection APIs might not work as expected.
-
-							✅ const range = document.createRange();
-							Creates a new Range object.
-
-							A Range represents a portion of the DOM (like text or elements).
-
-							Think of it like marking a span of text with a highlighter — you're defining where a selection starts and ends.
-
-							✅ range.selectNodeContents(inputEl);
-							Tells the range to cover the entire contents of the .input element.
-
-							If .input has text like "hello world", the range now spans from just before h to just after d.
-
-							✅ range.collapse(false);
-							This collapses the range to a single caret position.
-
-							false means collapse to the end of the range (after the last character).
-
-							(true would collapse to the start.)
-
-							This is what moves the caret to the end of the content.
-
-							✅ const selection = window.getSelection();
-							Gets the current text selection object for the page.
-
-							This lets you manipulate the caret position or selected text in the document.
-
-							✅ selection.removeAllRanges();
-							Clears any existing selections/carets in the document.
-
-							If the user had anything selected, it is now cleared.
-
-							✅ selection.addRange(range);
-							Applies the range we created above (collapsed to the end).
-
-							This places the caret at the end of the content in .input.
-						*/					
-
+					
 						// Move cursor to end -- logic
 							input_div!.focus();
 							const range = document.createRange();
@@ -394,8 +352,6 @@ import { projects } from "../components/data.astro"; // if external; or define a
 					if (matches) {
 						matches.style.left = `${caret.x + window.scrollX}px`;
 						matches.style.top = `${caret.y + 20 + window.scrollY}px`; // 20px offset to appear below caret
-						// matches.style.left = `${caret.x - 600}px`;
-						// matches.style.top = `${caret.y - 500}px`; // 20px offset to appear below caret
 					}
 
 				}
